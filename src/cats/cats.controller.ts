@@ -1,21 +1,17 @@
-import { Controller, Get, Req, Post, Header, Redirect, Param } from '@nestjs/common';
+import { Controller, Get, Req, Post, Header, Redirect, Param, Body } from '@nestjs/common';
 import { Request, json } from "express";
 import { get } from 'http';
+import { CreateCatDto } from 'src/dto/create-cat.dto';
+import { CatsService } from './cats.service';
+import { Cat } from 'src/interfaces/cat.interface';
 
 @Controller('cats')
 export class CatsController {
+  constructor(private catsService: CatsService) {}
+
   @Get()
-  findAll(@Req() request: Request): Object {
-    const obj = {
-      a: 'zhangsan',
-      b: 123,
-      c: {
-        d: 'this ia nested value'
-      },
-      e: request.rawHeaders,
-    }
-    const str = 'this action returns all cats'
-    return obj
+  findAll(): Promise<Cat[]> {
+    return this.catsService.findAll()
   }
 
   @Get(':id')
@@ -27,7 +23,7 @@ export class CatsController {
 
   @Post()
   @Header('Catch-Control', 'none')
-  create(): string{
-    return 'this action add a new cat'
+  create(@Body() createCatDto: CreateCatDto) {
+    return this.catsService.create(createCatDto)
   }
 }
