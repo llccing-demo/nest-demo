@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Post, Header, Redirect, Param, Body } from '@nestjs/common';
+import { Controller, Get, Req, Post, Header, Redirect, Param, Body, HttpException, HttpStatus } from '@nestjs/common';
 import { Request, json } from "express";
 import { get } from 'http';
 import { CreateCatDto } from 'src/dto/create-cat.dto';
@@ -7,11 +7,16 @@ import { Cat } from 'src/interfaces/cat.interface';
 
 @Controller('cats')
 export class CatsController {
-  constructor(private catsService: CatsService) {}
+  constructor(private catsService: CatsService) { }
 
   @Get()
-  findAll(): Promise<Cat[]> {
+  findAll() {
     return this.catsService.findAll()
+  }
+
+  @Get('findError')
+  findError() {
+    return new HttpException({ status: 403, error: 'this is custom error' }, HttpStatus.FORBIDDEN)
   }
 
   @Get(':id')
