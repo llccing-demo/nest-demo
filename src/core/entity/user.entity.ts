@@ -9,6 +9,4 @@ export class User extends BaseEntity {
   @Column({ name: 'Password' })
   public password: string;
 
-  @Column({ name: 'RoleId' })
-  public roleId: number;
 }

@@ -5,7 +5,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoggerMiddleware } from "./middlewares/logger.middleware";
 import { CoreModule } from './core/core.module';
-import { User } from './core/entity/user.entity';
 
 @Module({
   imports: [
@@ -16,7 +15,7 @@ import { User } from './core/entity/user.entity';
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [User],
+      entities: ['dist/**/**.entity{.ts,.js}'],
       synchronize: true
     }),
     CoreModule
