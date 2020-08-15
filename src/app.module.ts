@@ -1,15 +1,28 @@
 import { Module, MiddlewareConsumer } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CatsController } from './cats/cats.controller';
-import { CatsService } from './cats/cats.service';
-import { DogsModule } from './dogs/dogs.module';
 import { LoggerMiddleware } from "./middlewares/logger.middleware";
+import { CoreModule } from './core/core.module';
+import { User } from './core/entity/user.entity';
 
 @Module({
-  imports: [DogsModule],
-  controllers: [AppController, CatsController],
-  providers: [AppService, CatsService],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: process.env.DATABASE_HOST,
+      port: Number.parseInt(process.env.DATABASE_PORT),
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
+      entities: [User],
+      synchronize: true
+    }),
+    CoreModule
+  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
