@@ -16,3 +16,15 @@ dotenv.config();
 ```
 
 这样便可以直接读取配置并初始化
+
+## todo
+
+### 权限相关
+
+- [https://wanago.io/2020/05/25/api-nestjs-authenticating-users-bcrypt-passport-jwt-cookies/](https://wanago.io/2020/05/25/api-nestjs-authenticating-users-bcrypt-passport-jwt-cookies/)
+
+- [https://dev.to/rebellionpay/building-authentication-for-microservices-using-nestjs-1fne](https://dev.to/rebellionpay/building-authentication-for-microservices-using-nestjs-1fne)
+
+- [http://www.woshipm.com/pd/1150093.html](http://www.woshipm.com/pd/1150093.html) rbac 的理解
+
+- [https://tuture.co/2020/05/12/@uXOOfFmhS/](https://tuture.co/2020/05/12/@uXOOfFmhS/) rbac 的尝试（sql 部分可以不参考）

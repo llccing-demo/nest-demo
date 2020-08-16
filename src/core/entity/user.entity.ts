@@ -4,9 +4,9 @@ import { BaseEntity } from './base.entity';
 @Entity('Users')
 export class User extends BaseEntity {
   @Column({ name: 'UserName' })
-  public userName: string;
+  public username: string;
 
-  @Column({ name: 'Password' })
-  public password: string;
+  @Column({ name: 'PasswordHash' })
+  public passwordHash: string;
 
 }

@@ -6,5 +6,8 @@ export class UserModel {
   public id?: number;
 
   @IsString()
-  public userName: string;
+  public username: string;
+
+  @IsString()
+  public passwordHash: string;
 }

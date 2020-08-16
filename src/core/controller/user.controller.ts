@@ -12,7 +12,7 @@ export class UserController {
   @Post()
   public async save(@Body() user: UserModel): Promise<any> {
     const userEntity = new User();
-    userEntity.userName = user.userName
+    userEntity.username = user.username
     let msg = '';
     console.log(user)
     const judge = await this.userService.save(userEntity);
