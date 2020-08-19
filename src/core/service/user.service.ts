@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entity/user.entity';
-import { Repository } from 'typeorm';
+import { Repository, DeepPartial } from 'typeorm';
 import { UserModel } from '../model/user.model';
 
 @Injectable()
@@ -38,7 +38,7 @@ export class UserService {
     })
   }
 
-  public async save(user: User): Promise<User> {
+  public async save(user: UserModel): Promise<any> {
     return this.userRepositoryService.save(user)
   }
 
@@ -47,5 +47,16 @@ export class UserService {
     const user = new UserModel()
     user.username = userName;
     return await this.userRepositoryService.find(user)
+  }
+
+  public convertToEntity(model: UserModel): DeepPartial<User> {
+    return model
+  }
+
+  public converToModel(user: User): UserModel {
+    const userModel = new UserModel()
+    userModel.id = user.id
+    userModel.username = user.username;
+    return userModel
   }
 }

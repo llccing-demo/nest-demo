@@ -9,5 +9,6 @@ export class UserModel {
   public username: string;
 
   @IsString()
-  public passwordHash: string;
+  @IsOptional()
+  public passwordHash?: string;
 }
