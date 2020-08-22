@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { LoggerMiddleware } from "./middlewares/logger.middleware";
+import { LoggerMiddleware } from './core/middlewares/logger.middleware';
 import { CoreModule } from './core/core.module';
 
 @Module({
@@ -16,7 +16,8 @@ import { CoreModule } from './core/core.module';
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       entities: ['dist/**/**.entity{.ts,.js}'],
-      synchronize: true
+      synchronize: true,
+      logging: true
     }),
     CoreModule
   ],

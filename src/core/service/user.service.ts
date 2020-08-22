@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entity/user.entity';
 import { Repository, DeepPartial } from 'typeorm';
 import { UserModel } from '../model/user.model';
+import { makeSalt, encryptPassword } from '../auth/cryptogram';
+import { UserRegisterModel } from '../model/user-register.model';
 
 @Injectable()
 export class UserService {
@@ -42,11 +44,19 @@ export class UserService {
     return this.userRepositoryService.save(user)
   }
 
-
   public async findOne(userName: string): Promise<any> {
     const user = new UserModel()
     user.username = userName;
-    return await this.userRepositoryService.find(user)
+    return await this.userRepositoryService.findOne(user)
+  }
+
+  public async register(userRegisterModel: UserRegisterModel): Promise<any> {
+    const salt = makeSalt();
+    const pwdHash = encryptPassword(userRegisterModel.password, salt)
+    const userEntity = new User()
+    userEntity.username = userRegisterModel.username
+    userEntity.passwordHash = pwdHash
+    return await this.userRepositoryService.save(userEntity)
   }
 
   public convertToEntity(model: UserModel): DeepPartial<User> {

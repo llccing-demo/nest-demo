@@ -4,6 +4,8 @@ import { User } from '../entity/user.entity';
 import { UserModel } from '../model/user.model';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { UserRegisterModel } from '../model/user-register.model';
+import { Result } from '../model/result.model';
 
 @Controller('api/v1/user')
 export class UserController {
@@ -13,19 +15,28 @@ export class UserController {
     private readonly userRepositoryService: Repository<User>
   ) { }
 
-  @Post()
-  public async save(@Body() user: UserModel): Promise<any> {
-    const userEntity = new User();
-    userEntity.username = user.username
-    let msg = '';
-    console.log(user)
-    const judge = await this.userService.save(userEntity);
-    if (judge) {
-      msg = '保存成功！'
-    } else {
-      msg = '保存失败'
+  @Post('register')
+  public async register(@Body() userRegisterModel: UserRegisterModel): Promise<any> {
+    const { password, confirmPassword } = userRegisterModel
+    console.log('userRegisterModel', userRegisterModel)
+    if (!password || !confirmPassword) {
+      return new Result('', 400, '请输入密码')
     }
-    return msg
+    if (password && confirmPassword && password !== confirmPassword) {
+      return new Result('', 400, '两次密码不一致')
+    }
+
+    const user = await this.userService.findOne(userRegisterModel.username)
+    if (user) {
+      return new Result('', 400, '用户已存在')
+    }
+
+    const judge = await this.userService.register(userRegisterModel)
+    if (judge) {
+      return new Result('', 200, '注册成功')
+    } else {
+      return new Result('', 500, '注册错误')
+    }
   }
 
   @Get()
