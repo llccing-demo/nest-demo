@@ -21,6 +21,8 @@ dotenv.config();
 
 ### 权限相关
 
+- [https://juejin.im/post/6844904097317912584](https://juejin.im/post/6844904097317912584) 使用 JWT 实现注册、登录
+
 - [https://wanago.io/2020/05/25/api-nestjs-authenticating-users-bcrypt-passport-jwt-cookies/](https://wanago.io/2020/05/25/api-nestjs-authenticating-users-bcrypt-passport-jwt-cookies/)
 
 - [https://dev.to/rebellionpay/building-authentication-for-microservices-using-nestjs-1fne](https://dev.to/rebellionpay/building-authentication-for-microservices-using-nestjs-1fne)
