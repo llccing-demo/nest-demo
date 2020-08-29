@@ -6,7 +6,7 @@ export class UserModel {
   public id?: number;
 
   @IsString()
-  public username: string;
+  public username?: string;
 
   @IsString()
   @IsOptional()
