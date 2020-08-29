@@ -11,4 +11,7 @@ export class UserModel {
   @IsString()
   @IsOptional()
   public passwordHash?: string;
+
+  @IsString()
+  public salt?: string;
 }

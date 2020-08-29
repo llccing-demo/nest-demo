@@ -56,6 +56,7 @@ export class UserService {
     const userEntity = new User()
     userEntity.username = userRegisterModel.username
     userEntity.passwordHash = pwdHash
+    userEntity.salt = salt;
     return await this.userRepositoryService.save(userEntity)
   }
 

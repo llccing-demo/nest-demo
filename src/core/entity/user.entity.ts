@@ -9,4 +9,6 @@ export class User extends BaseEntity {
   @Column({ name: 'PasswordHash' })
   public passwordHash: string;
 
+  @Column({name: 'Salt'})
+  public salt: string;
 }
