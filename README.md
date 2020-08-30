@@ -21,6 +21,12 @@ dotenv.config();
 
 ### 权限相关
 
+- [https://github.com/Abdallah-khalil/ContactManagerApp/blob/master/src/client/app/shared/api.service.ts#L36](https://github.com/Abdallah-khalil/ContactManagerApp/blob/master/src/client/app/shared/api.service.ts#L36)解决方案 - 前端如何向后端传送token
+
+```js
+headers.append('Authorization', `Bearer ${this.authService.getToken()}`);
+```
+
 - [https://juejin.im/post/6844904097317912584](https://juejin.im/post/6844904097317912584) 使用 JWT 实现注册、登录
 
 - [https://wanago.io/2020/05/25/api-nestjs-authenticating-users-bcrypt-passport-jwt-cookies/](https://wanago.io/2020/05/25/api-nestjs-authenticating-users-bcrypt-passport-jwt-cookies/)

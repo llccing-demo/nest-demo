@@ -1,20 +1,25 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { AuthGuard } from '@nestjs/passport'
+
 import { UserService } from '../service/user.service';
 import { User } from '../entity/user.entity';
 import { UserModel } from '../model/user.model';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { UserRegisterModel } from '../model/user-register.model';
 import { Result } from '../model/result.model';
+import { AuthService } from '../auth/auth.service';
 
 @Controller('api/v1/user')
 export class UserController {
   constructor(
     private readonly userService: UserService,
     @InjectRepository(User)
-    private readonly userRepositoryService: Repository<User>
+    private readonly userRepositoryService: Repository<User>,
+    private readonly authService: AuthService
   ) { }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('register')
   public async register(@Body() userRegisterModel: UserRegisterModel): Promise<any> {
     const { password, confirmPassword } = userRegisterModel
@@ -47,5 +52,22 @@ export class UserController {
       userModels.push(this.userService.converToModel(user))
     })
     return userModels
+  }
+
+  @Post('login')
+  public async login(@Body() loginParams: any) {
+    console.log(loginParams)
+    const authResult = await this.authService.validateUser(loginParams.username, loginParams.password)
+    console.log(authResult)
+    if (authResult.code === 200) {
+      return this.authService.certificate(authResult.user)
+    }
+    else {
+      return {
+        code: 401,
+        msg: '权限问题'
+      }
+    }
+
   }
 }
